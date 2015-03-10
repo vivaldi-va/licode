@@ -875,6 +875,16 @@ amqper.connect(function () {
 
             amqper.bind(rpcID, listen);
 
+            setInterval(function (argument) {
+                amqper.callRpc("ErizoAgent", "keepAlive", [], {callback: function (resp) {
+                    if (resp === 'timeout') {
+                        log.info('No ErizoAgents available');
+                    } else {
+                        log.info('Response from ErizoAgent: ', resp);
+                    }
+                }});
+            }, 5000);
+
         });
     } catch (error) {
         log.info("Error in Erizo Controller: ", error);

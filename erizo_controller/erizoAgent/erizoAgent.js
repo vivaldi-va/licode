@@ -60,7 +60,7 @@ var amqper = require('./../common/amqper');
 
 // Logger
 var log = logger.getLogger("ErizoAgent");
-
+var myId = Math.random() * 1000000000000000000;
 var childs = [];
 
 var SEARCH_INTERVAL = 5000;
@@ -172,6 +172,10 @@ var api = {
         } catch(err) {
             log.error("Error stopping ErizoJS");
         }
+    }, 
+    keepAlive: function (callback) {
+        log.info('Received KA from ErizoControler, Im ', myId);
+        callback('callback', myId);
     }
 };
 
